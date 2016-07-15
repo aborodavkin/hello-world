@@ -63,11 +63,14 @@ class ball():
         r = self.r
         canv.coords(self.id,x-r,y-r,x+r,y+r)
         canv.itemconfig (self.id, width = self.width, fill = self.color, outline = self.pen_color)
+clr = ['aqua', 'blue', 'green', 'maroon', 'orange', 'sienna', 'seagreen', 'royalblue', 'crimson', 'wheat',
+                  'pink', 'lawngreen', 'purple', 'red', 'violet', 'indigo', 'darkblue','chartreuse', 'lime', 'gold']
  
 balls = []
 # Создаем шарики!!!
 for z in range(20):
     new_ball = ball()
+    new_ball.color = clr[z]
     new_ball.x = rnd(50,w-50)
     new_ball.y = rnd(50,h-50)
     new_ball.r = rnd(10,50)
@@ -85,8 +88,7 @@ for z in range(20):
         new_ball.nx=-1
         new_ball.ny=1
         
-    new_ball.color = choice(['aqua', 'blue', 'fuchsia', 'green', 'maroon', 'orange',
-                  'pink', 'purple', 'red','yellow', 'violet', 'indigo', 'chartreuse', 'lime'])
+    
     balls += [new_ball]
 
 '''
