@@ -37,10 +37,19 @@ class Target:
         self.x = rnd(700,1000-100)
         self.y = rnd(100,500)
         self.r = rnd(10,50)
+        self.popali=0
         self.id = canvas.create_oval(self.x-self.r,self.y-self.r,self.x+self.r,self.y+self.r, fill='grey')
                                      
-               
-
+def popadalka(a,targets):
+    pass
+    for t in targets:
+        if abs(a.x - t.x) <= (a.r + t.r) and abs(a.y - t.y) <= (a.r + t.r) and t.popali==0:
+            print('Попадание!')
+            t.popali=1
+            canvas.delete(t.id)
+        
+            # print(t.id,t.x,t.y,t.r,sep='  ')
+            # print(a.id,a.x,a.y,a.r,sep='--')
 
 def snaryad(tetta=45,v0=100):
     global x_vyl,y_vyl 
@@ -64,8 +73,10 @@ def snaryad(tetta=45,v0=100):
         sy=-v0y*t+(g*t**2)/2
         x=x0+sx
         y=y0+sy
-        # --- Сравнение x y снаряда --- с коор каждой оставшейся мишени
-        # ---------------------------
+
+        # - Сравнение x, y снаряда - с коор оставшихся мишеней
+        popadalka(a,targets)
+        # -----------------------------------------------------
         obj=a.id
         try:
             canvas.delete(obj)
