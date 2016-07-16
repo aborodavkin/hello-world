@@ -5,12 +5,21 @@ import time
 from math import sin, cos, pi
 
 class Gun:
-    def __init__(self,canvas,width=30,x=100,y=500):
+    
+    def __init__(self,canvas,v0,tetta,width=30):
+        global x_vyl,y_vyl 
+         # сразу задаёмся радианами
+        rad=180/pi
+        tetta_r=tetta/rad # вместо градусов получили количество радиан     
         self.canvas = canvas
-        self.x=x
-        self.y=y
+        length=v0
+        dx=length*cos(tetta_r)
+        dy=length*sin(tetta_r)
         self.w=width
-        self.id = canvas.create_line(30,570,self.x,self.y,width=self.w,fill='black')
+        self.id = canvas.create_line(50,550,50+dx,550-dy,width=self.w,fill='black')
+        x_vyl=50+dx
+        y_vyl=550-dy
+        
     
 
 class Ball:
@@ -34,19 +43,20 @@ class Target:
 
 
 def snaryad(tetta=45,v0=100):
+    global x_vyl,y_vyl 
     # задаёмся переменными
-    x0=100    # координата х
+    x0=x_vyl    # координата х
     # tetta=60 # начальный угол 
     g=9.81   # ускорение свободного падения (м/с**2), можно подставить значение и для Луны
     # v0=100   # начальная скорость (м/с), типовая скорость снаряда
-    y0=500   # начальная вертикальная координата 
+    y0=y_vyl # начальная вертикальная координата 
  
     # сразу задаёмся радианами
     rad=180/pi
     tetta_r=tetta/rad # вместо градусов получили количество радиан     
     a=Ball(canvas,15,'red',x0,y0)
     t=0
-    x=50
+    x=x0+a.r
     while x<1000+a.r:
         v0x=v0*cos(tetta_r)
         v0y=v0*sin(tetta_r)
@@ -68,6 +78,50 @@ def snaryad(tetta=45,v0=100):
         t+=0.5
         time.sleep(0.1)
 
+
+def speed_up(event):
+    global v0,tetta,our_gun
+    pass
+    if v0<200:
+        v0+=5
+    # print('speed rise')
+    # изменяем пушку
+    canvas.delete(our_gun.id)
+    our_gun=Gun(canvas,v0,tetta,width)
+
+
+def speed_down(event):
+    global v0,tetta,our_gun
+    pass
+    if v0>50:
+        v0-=5
+    # print('speed down')
+    # изменяем пушку
+    canvas.delete(our_gun.id)
+    our_gun=Gun(canvas,v0,tetta,width)
+    
+
+def ugol_down(event):
+    global v0,tetta,our_gun
+    pass
+    if tetta>0:
+        tetta-=5
+    # print('Угол: ',tetta)
+    # изменяем пушку
+    canvas.delete(our_gun.id)
+    our_gun=Gun(canvas,v0,tetta,width)
+
+
+def ugol_up(event):
+    global v0,tetta,our_gun
+    pass
+    if tetta<90:
+        tetta+=5
+    # print('Угол: ',tetta)
+    # изменяем пушку
+    canvas.delete(our_gun.id)
+    our_gun=Gun(canvas,v0,tetta,width)
+    
 def babah(event):
     global tetta,v0
     snaryad(tetta,v0)
@@ -77,10 +131,16 @@ if __name__=='__main__':
     tk.title("Game")
     tk.resizable(0, 0)
     tk.wm_attributes("-topmost", 1)
-    canvas = Canvas(tk, width=1000, height=600, bd=0, highlightthickness=0)
+    w=1000
+    h=600
+    canvas = Canvas(tk, width=w, height=h, bd=0, highlightthickness=0)
     canvas.pack()
+    v0=100   # начальная скорость (м/с), типовая скорость снаряда
+    tetta=45 # начальный угол
+    width=30
     # Рисуем пушку
-    our_gun=Gun(canvas)
+    # self,canvas,v0,tetta,width=30
+    our_gun=Gun(canvas,v0,tetta,width)
     # Расставляем случайно мишени
     targets_count=rnd(2,6)
     targets=[]
@@ -88,11 +148,16 @@ if __name__=='__main__':
         t=Target(canvas)
         targets.append(t)
     tk.update()                                     
-    v0=100   # начальная скорость (м/с), типовая скорость снаряда
-    tetta=60 # начальный угол
-
+    
     # Запускаем снаряд
+    
+    tk.bind('<Up>',ugol_up)
+    tk.bind('<Down>',ugol_down)
+    tk.bind('<Right>',speed_up)
+    tk.bind('<Left>',speed_down)
     tk.bind('<space>',babah)
+    
+    
 
 
     
