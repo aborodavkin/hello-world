@@ -128,8 +128,8 @@ def click_ball(event):
         new_ball.nap = rnd(1,4)
         new_ball.nx = 1
         new_ball.ny = 1
-        new_ball.color = choice(['aqua', 'blue', 'fuchsia', 'green', 'maroon', 'orange',
-                  'pink', 'purple', 'red','yellow', 'violet', 'indigo', 'chartreuse', 'lime'])
+        new_ball.color = choice(['lemonchiffon', 'olivedrab', 'ivory', 'powderblue', 'darkslategray', 'orange',
+                  'pink', 'gold', 'red','yellow', 'violet', 'indigo', 'chartreuse', 'lime'])
         
         balls += [new_ball]
        
@@ -182,6 +182,8 @@ canv = Canvas(root, bg = 'white')
 canv.pack(fill = BOTH, expand = 1)
 scores=0
 balls = []
+colors= ['aqua', 'blue', 'fuchsia', 'green', 'maroon', 'orange', 'lawngreen', 'lightseagreen', 'deeppink', 'crimson',
+                  'pink', 'purple', 'red','yellow', 'violet', 'indigo', 'chartreuse', 'lime', 'hotpink', 'khaki' ]
 # Создаем шарики!!!
 for z in range(20):
     new_ball = ball()
@@ -189,6 +191,7 @@ for z in range(20):
     new_ball.y = rnd(50,h-50)
     new_ball.r = rnd(10,50)
     new_ball.nap = rnd(1,4)
+    new_ball.color = colors[z]
     if new_ball.nap==1:
         new_ball.nx=1
         new_ball.ny=1
@@ -202,8 +205,8 @@ for z in range(20):
         new_ball.nx=-1
         new_ball.ny=1
         
-    new_ball.color = choice(['aqua', 'blue', 'fuchsia', 'green', 'maroon', 'orange',
-                  'pink', 'purple', 'red','yellow', 'violet', 'indigo', 'chartreuse', 'lime'])
+   # new_ball.color = choice(['aqua', 'blue', 'fuchsia', 'green', 'maroon', 'orange',
+                 # 'pink', 'purple', 'red','yellow', 'violet', 'indigo', 'chartreuse', 'lime'])
     balls += [new_ball]
 
 for b in balls:
