@@ -66,7 +66,11 @@ def snaryad(tetta=45,v0=100):
         except:
             pass
         t+=0.5
-        time.sleep(0.3)
+        time.sleep(0.1)
+
+def babah(event):
+    global tetta,v0
+    snaryad(tetta,v0)
 
 if __name__=='__main__':
     tk = Tk()
@@ -86,5 +90,9 @@ if __name__=='__main__':
     tk.update()                                     
     v0=100   # начальная скорость (м/с), типовая скорость снаряда
     tetta=60 # начальный угол
+
     # Запускаем снаряд
-    snaryad(tetta,v0)
+    tk.bind('<space>',babah)
+
+
+    
