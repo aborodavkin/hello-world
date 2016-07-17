@@ -45,7 +45,7 @@ class Target:
         self.score_text = canvas.create_text(self.x,self.y,text=self.score)
                                      
 def popadalka(targets):
-    global score_all,kv,a
+    global score_all,kv,a,flag
     pass
     for t in targets:
         if abs(a.x - t.x) <= (a.r + t.r) and abs(a.y - t.y) <= (a.r + t.r) and t.popali==0:
@@ -58,6 +58,7 @@ def popadalka(targets):
             canvas.delete(t.id)
             # Удаляем снаряд
             canvas.delete(a.id)
+            flag=1
             # Изменяем очки
             ochki='Количество очков: '+str(score_all)+'     '
             label1.config(text=ochki,font='Sans 16 italic',fg='grey')
@@ -69,12 +70,14 @@ def popadalka(targets):
             cena_v='Цена выстрела: '+str(cv)[0:5]
             label3.config(text=cena_v,font='Sans 16 italic',fg='red')
             # ---------------------------------------------
+           
        
                 
 def snaryad(tetta=45,v0=100):
-    global x_vyl,y_vyl,kv,score_all,a
+    global x_vyl,y_vyl,kv,score_all,a,flag
     # + 1 выстрел
     kv+=1
+    flag=0
     # выводим цену выcтрела
     ko=score_all # наплодил сдуру сущностей одинаковых
     cv=ko/kv
@@ -106,8 +109,12 @@ def snaryad(tetta=45,v0=100):
         x=x0+sx
         y=y0+sy
         # - Сравнение x, y снаряда - с коор оставшихся мишеней
-        popadalka(targets)
+        if flag==0:
+            popadalka(targets)
         # -----------------------------------------------------
+        if flag==1:
+            print('Попали')
+            break
         obj=a.id
         try:
             canvas.delete(obj)
